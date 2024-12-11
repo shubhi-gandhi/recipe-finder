@@ -7,11 +7,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 
-
-
 process.stdin.setEncoding("utf8");
-const portNumber = process.argv[2];
-const PORT = process.env.PORT || portNumber || 3000;
+const PORT = process.env.PORT || 3000;
 
 
 require('dotenv').config();
@@ -35,14 +32,16 @@ let database;
 
 
 if (process.argv.length!=3){
-   process.stdout.write(`Usage: node summerCampServer.js portNumber\n`);
+   process.stdout.write(`Usage: node app.js portNumber\n`);
    process.exit(1);
 }
 client.connect().then(()=>{
    database = client.db("campApplicants");
    console.log("connected to database\n");
-   app.listen(portNumber);
-   console.log(`Web server started and running at http://localhost:${portNumber}`);
+   app.listen(PORT, () => {
+      console.log(`Web server started and running at http://localhost:${PORT}`);
+   });
+   console.log(`Web server started and running at http://localhost:${PORT}`);
    process.stdout.write(`stop to shutdown the server: `);
 })
 .catch(err=>console.log("failed to connect", err));
@@ -118,21 +117,21 @@ async function app_submit(newForm){
 
 
 app.get("/adminRemove", (req, res) => {
-   const url = "http://localhost:"+portNumber+"/adminRemove";
+   const url = "http://localhost:"+PORT+"/adminRemove";
    res.render("adminRemove", {url});
  });
 
 
  /*Route to handle the remove-all request*/
 app.get("/adminRemove", (req, res) => {
-   const url = "http://localhost:"+portNumber+"/adminRemove";
+   const url = "http://localhost:"+PORT+"/adminRemove";
    res.render("adminRemove", {url});
 });
 
 
  /*Route to handle the remove-all request*/
 app.get("/adminRemove", (req, res) => {
-   const url = "http://localhost:"+portNumber+"/adminRemove";
+   const url = "http://localhost:"+PORT+"/adminRemove";
    res.render("adminRemove", {url});
 });
 
